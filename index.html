@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GESTION FACILE KSCOR V8.58 - 80mm LICENCE MOMO</title>
+<title>GESTION FACILE KSCOR V8.58 - 80mm</title>
 
 
 <link rel="manifest" href="manifest.json">
@@ -35,14 +35,19 @@ h3{color:#1e40af; margin:0 0 8px 0}
 .filtre-histo{display:flex; gap:5px; margin-bottom:10px; flex-wrap:wrap}
 .filtre-histo input{flex:1; min-width:120px}
 input{width:100%; padding:10px; margin:6px 0; border:1px solid #cbd5e1; border-radius:6px; box-sizing:border-box; font-size:14px}
-button.add{background:#16a34a; color:white; padding:12px; border:none; border-radius:6px; width:100%; margin-top:8px; font-weight:bold; font-size:15px}
+button.add{background:#16a34a; color:white; padding:12px; border:none; border-radius:6px; width:100%; margin-top:8px; font-weight:bold; font-size:15px; cursor:pointer}
 button.recharge{background:#f59e0b; color:white; padding:5px 10px; border:none; border-radius:5px; font-size:12px; margin-left:5px}
 button.supprimer{background:#ef4444; color:white; padding:5px 10px; border:none; border-radius:5px; font-size:12px; margin-left:5px}
 button.annuler{background:#ef4444; color:white; padding:4px 8px; border:none; border-radius:5px; font-size:11px; font-weight:bold}
 button.recu{background:#2563eb; color:white; padding:4px 8px; border:none; border-radius:5px; font-size:11px; font-weight:bold; margin-right:3px}
 button.param{background:#6366f1; color:white; padding:10px; border:none; border-radius:6px; width:100%; margin-top:8px; font-weight:bold; font-size:14px}
 button.panier{background:#0ea5e9; color:white; padding:10px; border:none; border-radius:6px; width:100%; margin-top:5px; font-weight:bold}
-button.momo{background:#FFCC00; color:#000; padding:12px; border:none; border-radius:6px; width:100%; margin-top:8px; font-weight:bold; font-size:15px}
+button.store-btn{padding:12px; border:none; border-radius:6px; width:100%; margin-top:8px; font-weight:bold; font-size:14px; color:white; cursor:pointer}
+button.google{background:#4285F4}
+button.huawei{background:#C0014D}
+button.samsung{background:#1428A0}
+button.amazon{background:#FF9900; color:#000}
+button.momo{background:#FFCC00; color:#000; padding:12px; border:none; border-radius:6px; width:100%; margin-top:8px; font-weight:bold; font-size:14px}
 table{width:100%; background:white; border-collapse:collapse; margin-top:8px; font-size:10px}
 th{background:#e2e8f0} th,td{border:1px solid #e2e8f0; padding:4px; text-align:center}
 .total{font-weight:bold; background:#fef9c3}
@@ -58,145 +63,191 @@ th{background:#e2e8f0} th,td{border:1px solid #e2e8f0; padding:4px; text-align:c
 .recu-btns{position:sticky; bottom:0; background:#1e40af; padding:10px; display:flex; gap:5px}
 .recu-btns button{flex:1; padding:10px; border:none; border-radius:5px; color:white; font-weight:bold}
 #popupLicence{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; justify-content:center; align-items:center; z-index:9999}
-#popupLicence div{background:white; padding:25px; border-radius:10px; width:90%; max-width:380px; text-align:center}
-#popupLicence h2{color:#ef4444; background:none; padding:0; font-size:20px}
-.jours-restants{font-size:18px; font-weight:bold; color:#16a34a; margin:10px 0}
-.jours-expire{font-size:18px; font-weight:bold; color:#ef4444; margin:10px 0}
-.code-appareil{font-size:20px; font-weight:bold; color:#1e40af; background:#e2e8f0; padding:10px; border-radius:5px; margin:10px 0; letter-spacing:2px}
+#popupLicence div{background:white; padding:20px; border-radius:10px; width:90%; max-width:380px; text-align:center; max-height:90vh; overflow-y:auto}
+#popupLicence h2{color:#ef4444; background:none; padding:0; font-size:18px}
+.price-tag{font-size:18px; margin:10px 0}
+.old-price{text-decoration:line-through; color:#ef4444; font-weight:bold; margin-right:8px}
+.new-price{color:#16a34a; font-weight:bold; font-size:22px}
+.jours-restants{font-size:16px; font-weight:bold; color:#16a34a; margin:10px 0}
+.jours-expire{font-size:16px; font-weight:bold; color:#ef4444; margin:10px 0}
+.code-appareil{font-size:18px; font-weight:bold; color:#1e40af; background:#e2e8f0; padding:8px; border-radius:5px; margin:8px 0; letter-spacing:2px}
 </style>
 </head>
 <body>
 
 
 <div id="popupLicence">
-<div>
-<h2>🔒 ACTIVATION REQUISE</h2>
-<p id="msgLicence">Période d'essai en cours</p>
-<p class="jours-restants" id="joursRestants"></p>
-<div id="zoneCodeAppareil" style="display:none">
-  <p><b>1. Ton code appareil:</b></p>
-  <div class="code-appareil" id="codeAppareil"></div>
-  <p><b>2. Envoie 30000F par MoMo au:</b></p>
-  <p style="font-size:18px; font-weight:bold">+229 01 67 08 71 23</p>
-  <p><b>3. Envoie ton code par WhatsApp et reçois ta clé</b></p>
-</div>
-<input type="text" id="inputLicence" placeholder="Colle ici la clé reçue">
-<button class="add" onclick="verifierLicence()">DÉBLOQUER À VIE</button>
-<button class="momo" onclick="afficherPaiement()">💳 PAYER PAR MOBILE MONEY 30000F</button>
-</div>
+  <div>
+    <h2>🔒 ACTIVATION REQUISE</h2>
+    <p id="msgLicence">Offre de lancement (21 jours offerts)</p>
+    
+    <div class="price-tag">
+      <span class="old-price">❌ 30.000 F</span>
+      <span class="new-price">5.000 F CFA</span>
+    </div>
+
+
+    <p class="jours-restants" id="joursRestants"></p>
+
+
+    <div id="zoneCodeAppareil" style="display:none">
+      <p style="font-size:12px"><b>1. Ton code appareil:</b></p>
+      <div class="code-appareil" id="codeAppareil"></div>
+      <p style="font-size:12px"><b>2. Envoie 5.000F par MoMo au:</b></p>
+      <p style="font-size:16px; font-weight:bold">+229 01 67 08 71 23</p>
+      <p style="font-size:12px"><b>3. Transmets ton code par WhatsApp pour recevoir ta clé.</b></p>
+    </div>
+
+
+    <input type="text" id="inputLicence" placeholder="Colle ici la clé d'activation">
+    <button class="add" onclick="verifierLicence()">DÉBLOQUER À VIE</button>
+    
+    <hr style="margin:15px 0; border:none; border-top:1px solid #ddd">
+    <p style="font-size:12px; font-weight:bold; margin-bottom:5px">ACHETER VIA UNE BOUTIQUE D'APPLICATIONS :</p>
+    
+    <button class="store-btn google" onclick="payerViaStore('google')">🛒 Google Play Store</button>
+    <button class="store-btn huawei" onclick="payerViaStore('huawei')">🛒 Huawei AppGallery</button>
+    <button class="store-btn samsung" onclick="payerViaStore('samsung')">🛒 Samsung Galaxy Store</button>
+    <button class="store-btn amazon" onclick="payerViaStore('amazon')">🛒 Amazon Appstore</button>
+    
+    <button class="momo" onclick="afficherPaiement()">💳 PAYER PAR MOBILE MONEY (5000F)</button>
+  </div>
 </div>
 
 
-<h2>GESTION FACILE KSCOR V8.58 - 80mm
-<span id="compteurEssai" class="badge-essai" style="display:none"></span>
+<h2>GESTION FACILE KSCOR V8.58
+  <span id="compteurEssai" class="badge-essai" style="display:none"></span>
 </h2>
 
 
 <div class="tab">
-<button class="tablinks active" onclick="openTab('Ventes', this)">VENTES</button>
-<button class="tablinks" onclick="verifierCodeStock()">STOCK</button>
-<button class="tablinks" onclick="openTab('Parametres', this)">PARAMÈTRES</button>
-<button class="tablinks" onclick="openTab('Historique', this)">HISTORIQUE</button>
+  <button class="tablinks active" onclick="openTab('Ventes', this)">VENTES</button>
+  <button class="tablinks" onclick="verifierCodeStock()">STOCK</button>
+  <button class="tablinks" onclick="openTab('Parametres', this)">PARAMÈTRES</button>
+  <button class="tablinks" onclick="openTab('Historique', this)">HISTORIQUE</button>
 </div>
 
 
 <div id="modalCode">
-<div>
-<h3>CODE D'ACCÈS STOCK</h3>
-<input type="password" id="inputCode" placeholder="Tape le code">
-<button class="add" onclick="ouvrirStock()">VALIDER</button>
-<button style="background:#6b7280; margin-top:5px" class="add" onclick="fermerModal()">ANNULER</button>
-</div>
+  <div>
+    <h3>CODE D'ACCÈS STOCK</h3>
+    <input type="password" id="inputCode" placeholder="Tape le code">
+    <button class="add" onclick="ouvrirStock()">VALIDER</button>
+    <button style="background:#6b7280; margin-top:5px" class="add" onclick="fermerModal()">ANNULER</button>
+  </div>
 </div>
 
 
 <div id="Ventes" class="page active">
-<div class="filtre-vente">
-<button class="active" onclick="setFiltreVente('jour', this)">Jour</button>
-<button onclick="setFiltreVente('semaine', this)">Semaine</button>
-<button onclick="setFiltreVente('mois', this)">Mois</button>
-<button onclick="setFiltreVente('annee', this)">Année</button>
-</div>
-<input type="date" id="selectDateJour">
+  <div class="filtre-vente">
+    <button class="active" onclick="setFiltreVente('jour', this)">Jour</button>
+    <button onclick="setFiltreVente('semaine', this)">Semaine</button>
+    <button onclick="setFiltreVente('mois', this)">Mois</button>
+    <button onclick="setFiltreVente('annee', this)">Année</button>
+  </div>
+  <input type="date" id="selectDateJour">
 
 
-<div class="section"><h3>NOUVELLE VENTE - PANIER</h3>
-<input type="date" id="dateVente">
-<input list="listeProduits" id="produitVente" placeholder="Tape pour chercher...">
-<datalist id="listeProduits"></datalist>
-<input type="number" id="qteVente" placeholder="Quantité" value="1">
-<input type="number" id="prixVente" placeholder="Prix de vente">
-<input type="number" id="benefVente" placeholder="Bénéfice unitaire">
-<button class="panier" onclick="ajouterAuPanier()">+ AJOUTER AU PANIER</button>
-<div id="zonePanier" style="display:none; margin-top:10px">
-<h4>Panier: <span id="totalPanier">0 F</span></h4><div id="listePanier"></div>
-<button class="add" onclick="validerVentePanier()">✓ VALIDER LA VENTE</button>
-<button style="background:#6b7280" class="add" onclick="viderPanier()">VIDER PANIER</button></div></div>
+  <div class="section">
+    <h3>NOUVELLE VENTE - PANIER</h3>
+    <input type="date" id="dateVente">
+    <input list="listeProduits" id="produitVente" placeholder="Tape pour chercher...">
+    <datalist id="listeProduits"></datalist>
+    <input type="number" id="qteVente" placeholder="Quantité" value="1">
+    <input type="number" id="prixVente" placeholder="Prix de vente">
+    <input type="number" id="benefVente" placeholder="Bénéfice unitaire">
+    <button class="panier" onclick="ajouterAuPanier()">+ AJOUTER AU PANIER</button>
+    <div id="zonePanier" style="display:none; margin-top:10px">
+      <h4>Panier: <span id="totalPanier">0 F</span></h4>
+      <div id="listePanier"></div>
+      <button class="add" onclick="validerVentePanier()">✓ VALIDER LA VENTE</button>
+      <button style="background:#6b7280" class="add" onclick="viderPanier()">VIDER PANIER</button>
+    </div>
+  </div>
 
 
-<div class="section"><h3 id="titreTableau">VENTES DU JOUR</h3>
-<table id="tableVentesFiltre"></table>
-</div>
+  <div class="section">
+    <h3 id="titreTableau">VENTES DU JOUR</h3>
+    <table id="tableVentesFiltre"></table>
+  </div>
 
 
-<div class="section"><h3>RÉSUMÉ</h3>
-<table>
-<tr class="total"><td id="titreResume">Chiffre d'Affaires Jour</td><td id="caResume">0 F</td></tr>
-<tr class="benef"><td id="titreBenef">BÉNÉFICE JOUR</td><td id="benefResume">0 F</td></tr>
-<tr><td id="titreNb">Nombre de Ventes</td><td id="nbResume">0</td></tr>
-</table>
-</div>
+  <div class="section">
+    <h3>RÉSUMÉ</h3>
+    <table>
+      <tr class="total"><td id="titreResume">Chiffre d'Affaires Jour</td><td id="caResume">0 F</td></tr>
+      <tr class="benef"><td id="titreBenef">BÉNÉFICE JOUR</td><td id="benefResume">0 F</td></tr>
+      <tr><td id="titreNb">Nombre de Ventes</td><td id="nbResume">0</td></tr>
+    </table>
+  </div>
 </div>
 
 
 <div id="Stock" class="page">
-<div class="section"><h3>AJOUTER / RECHARGER STOCK</h3>
-<input type="text" id="nomProduit" placeholder="Nom du produit">
-<input type="number" id="stockAjout" placeholder="Quantité à ajouter">
-<button class="add" onclick="ajouterProduit()">+ AJOUTER / RECHARGER</button></div>
-<div class="section"><h3>ÉTAT DU STOCK</h3><div style="font-weight:bold; color:#1e40af">Total Produits: <span id="totalProduits">0</span></div><table id="tableStock"></table></div>
+  <div class="section">
+    <h3>AJOUTER / RECHARGER STOCK</h3>
+    <input type="text" id="nomProduit" placeholder="Nom du produit">
+    <input type="number" id="stockAjout" placeholder="Quantité à ajouter">
+    <button class="add" onclick="ajouterProduit()">+ AJOUTER / RECHARGER</button>
+  </div>
+  <div class="section">
+    <h3>ÉTAT DU STOCK</h3>
+    <div style="font-weight:bold; color:#1e40af">Total Produits: <span id="totalProduits">0</span></div>
+    <table id="tableStock"></table>
+  </div>
 </div>
 
 
 <div id="Parametres" class="page">
-<div class="section"><h3>INFORMATIONS DE L'ÉTABLISSEMENT</h3>
-<input type="text" id="nomEts"><input type="text" id="telEts"><input type="text" id="adresseEts">
-<button class="add" onclick="saveInfosEts()">💾 ENREGISTRER INFOS ETS</button></div>
+  <div class="section">
+    <h3>INFORMATIONS DE L'ÉTABLISSEMENT</h3>
+    <input type="text" id="nomEts">
+    <input type="text" id="telEts">
+    <input type="text" id="adresseEts">
+    <button class="add" onclick="saveInfosEts()">💾 ENREGISTRER INFOS ETS</button>
+  </div>
 
 
-<div class="section"><h3>SAUVEGARDE & RESTAURATION</h3>
-<button class="add" style="background:#2563eb" onclick="exporterDonnees()">📤 EXPORTER MES DONNÉES</button>
-<input type="file" id="importFile" accept=".json" style="display:none" onchange="importerDonnees(event)">
-<button class="add" style="background:#f59e0b" onclick="document.getElementById('importFile').click()">📥 IMPORTER MES DONNÉES</button>
-<small style="color:#64748b">Conseil: Exporte chaque semaine et envoie le fichier sur WhatsApp</small></div>
+  <div class="section">
+    <h3>SAUVEGARDE & RESTAURATION</h3>
+    <button class="add" style="background:#2563eb" onclick="exporterDonnees()">📤 EXPORTER MES DONNÉES</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importerDonnees(event)">
+    <button class="add" style="background:#f59e0b" onclick="document.getElementById('importFile').click()">📥 IMPORTER MES DONNÉES</button>
+    <small style="color:#64748b">Conseil: Exporte chaque semaine et sauvegarde le fichier.</small>
+  </div>
 
 
-<div class="section"><h3>SÉCURITÉ</h3>
-<button class="param" onclick="changerCode()">🔒 CHANGER LE CODE D'ACCÈS STOCK</button></div>
+  <div class="section">
+    <h3>SÉCURITÉ</h3>
+    <button class="param" onclick="changerCode()">🔒 CHANGER LE CODE D'ACCÈS STOCK</button>
+  </div>
 </div>
 
 
 <div id="Historique" class="page">
-<div class="section infos-ets" id="infosEtsAffichage"></div>
-<div class="section">
-<h3>RECHERCHE & FILTRE</h3>
-<div class="filtre-histo">
-<input type="text" id="searchHisto" placeholder="🔍 Chercher produit..." onkeyup="afficherHisto()">
-<input type="date" id="dateDebut" onchange="afficherHisto()">
-<input type="date" id="dateFin" onchange="afficherHisto()">
-</div>
-</div>
-<div class="section"><h3>TOUT L'HISTORIQUE DES VENTES + REÇUS</h3><table id="tableVentesTout"></table></div>
+  <div class="section infos-ets" id="infosEtsAffichage"></div>
+  <div class="section">
+    <h3>RECHERCHE & FILTRE</h3>
+    <div class="filtre-histo">
+      <input type="text" id="searchHisto" placeholder="🔍 Chercher produit..." onkeyup="afficherHisto()">
+      <input type="date" id="dateDebut" onchange="afficherHisto()">
+      <input type="date" id="dateFin" onchange="afficherHisto()">
+    </div>
+  </div>
+  <div class="section">
+    <h3>TOUT L'HISTORIQUE DES VENTES + REÇUS</h3>
+    <table id="tableVentesTout"></table>
+  </div>
 </div>
 
 
 <div id="popupRecu">
-<div class="recu-contenu" id="contenuRecu"></div>
-<div class="recu-btns">
-<button style="background:#2563eb" onclick="imprimerRecu()">🖨️ IMPRIMER RAWBT</button>
-<button style="background:#25D366" onclick="partagerWhatsApp()">📲 PARTAGER</button>
-<button style="background:#6b7280" onclick="fermerPopupRecu()">✖ FERMER</button>
-</div>
+  <div class="recu-contenu" id="contenuRecu"></div>
+  <div class="recu-btns">
+    <button style="background:#2563eb" onclick="imprimerRecu()">🖨️ IMPRIMER RAWBT</button>
+    <button style="background:#25D366" onclick="partagerWhatsApp()">📲 PARTAGER</button>
+    <button style="background:#6b7280" onclick="fermerPopupRecu()">✖ FERMER</button>
+  </div>
 </div>
 
 
@@ -211,8 +262,8 @@ if ('serviceWorker' in navigator) {
 
 
 let NUMERO_MOMO = "+229 01 67 08 71 23";
-let PRIX_LICENCE = 30000;
-let JOURS_ESSAI = 14;
+let PRIX_LICENCE = 5000;
+let JOURS_ESSAI = 21;
 
 
 let CODE_STOCK = localStorage.getItem('code_stock_V58GF') || "1234";
@@ -233,59 +284,438 @@ function getCodeAppareil(){
   }
   return code;
 }
+
+
 function afficherPaiement(){
   document.getElementById('zoneCodeAppareil').style.display = 'block';
   document.getElementById('codeAppareil').innerText = getCodeAppareil();
   document.getElementById('msgLicence').innerHTML = "Procédure de paiement Mobile Money";
 }
+
+
+function payerViaStore(storeName) {
+  alert("Redirection vers le paiement In-App " + storeName.toUpperCase() + "...");
+}
+
+
 function checkLicence(){
   let licenceValide = localStorage.getItem('licence_valide_V58GF');
   let dateInstall = localStorage.getItem('date_install_V58GF');
-  if(!dateInstall){ localStorage.setItem('date_install_V58GF', new Date().getTime()); dateInstall = new Date().getTime(); }
+  if(!dateInstall){ 
+    dateInstall = new Date().getTime();
+    localStorage.setItem('date_install_V58GF', dateInstall); 
+  }
   let diffJours = Math.floor((new Date().getTime() - parseInt(dateInstall)) / (1000 * 60 * 60 * 24));
   let joursRestants = JOURS_ESSAI - diffJours;
-  if(licenceValide == "true"){ document.getElementById('popupLicence').style.display = 'none'; return true; }
-  if(joursRestants > 0){ document.getElementById('popupLicence').style.display = 'none'; document.getElementById('compteurEssai').style.display = 'inline-block'; document.getElementById('compteurEssai').innerText = `ESSAI J-${joursRestants}`; return true; }
-  document.getElementById('msgLicence').innerHTML = "PÉRIODE D'ESSAI TERMINÉE!";
-  document.getElementById('joursRestants').innerHTML = `Achetez la licence ${PRIX_LICENCE}F pour continuer`;
+  
+  if(licenceValide == "true"){ 
+    document.getElementById('popupLicence').style.display = 'none'; 
+    return true; 
+  }
+  if(joursRestants > 0){ 
+    document.getElementById('popupLicence').style.display = 'none'; 
+    document.getElementById('compteurEssai').style.display = 'inline-block'; 
+    document.getElementById('compteurEssai').innerText = `ESSAI J-${joursRestants}`; 
+    return true; 
+  }
+  
+  document.getElementById('msgLicence').innerHTML = "PÉRIODE D'ESSAI TERMINÉE !";
+  document.getElementById('joursRestants').innerHTML = `Débloquez l'application pour ${PRIX_LICENCE}F CFA`;
   document.getElementById('joursRestants').className = "jours-expire";
   document.getElementById('popupLicence').style.display = 'flex';
   return false;
 }
-function genererCleValide(codeAppareil){ return btoa(codeAppareil + "KSCOR2026"); }
+
+
+function genererCleValide(codeAppareil){ 
+  return btoa(codeAppareil + "KSCOR2026"); 
+}
+
+
 function verifierLicence(){
   let cle = document.getElementById('inputLicence').value.trim();
   let codeAppareil = getCodeAppareil();
   let cleValide = genererCleValide(codeAppareil);
-  if(cle == cleValide){ localStorage.setItem('licence_valide_V58GF', "true"); alert("Licence activée! Merci pour votre achat de 30000F."); document.getElementById('popupLicence').style.display = 'none'; location.reload(); }
-  else{ alert("CLÉ INCORRECTE!"); }
+  if(cle === cleValide){ 
+    localStorage.setItem('licence_valide_V58GF', "true"); 
+    alert("Licence activée ! Merci pour votre achat."); 
+    document.getElementById('popupLicence').style.display = 'none'; 
+    location.reload(); 
+  } else { 
+    alert("CLÉ INCORRECTE !"); 
+  }
 }
-window.onload = function(){ if(checkLicence()){ initApp(); } }
-function initApp(){ dateVente.value=new Date().toISOString().split('T')[0]; selectDateJour.value=new Date().toISOString().split('T')[0]; dateDebut.value=new Date().toISOString().split('T')[0].substring(0,8)+"01"; dateFin.value=new Date().toISOString().split('T')[0]; selectDateJour.onchange = afficher; afficher(); }
-function formatDateJJMMAAAA(dateISO){ if(!dateISO) return ""; let [y,m,d] = dateISO.split('-'); return `${d}/${m}/${y}`; }
-function save(){ localStorage.setItem('stock_V58GF',JSON.stringify(stock)); localStorage.setItem('ventes_V58GF',JSON.stringify(ventes)); localStorage.setItem('code_stock_V58GF',CODE_STOCK); localStorage.setItem('infos_ets_V58GF',JSON.stringify(infosEts)); localStorage.setItem('compteur_recu_V58GF',compteurRecu); }
-function exporterDonnees(){ let data = {stock:stock, ventes:ventes, infosEts:infosEts, compteur:compteurRecu, code:CODE_STOCK}; let blob = new Blob([JSON.stringify(data)], {type: "application/json"}); let url = URL.createObjectURL(blob); let a = document.createElement("a"); a.href = url; a.download = "SAUVEGARDE_KSCOR_" + new Date().toISOString().split('T')[0] + ".json"; document.body.appendChild(a); a.click(); document.body.removeChild(a); alert("Sauvegarde téléchargée!"); }
-function importerDonnees(event){ let file = event.target.files[0]; if(!file) return; let reader = new FileReader(); reader.onload = function(e){ try{ let data = JSON.parse(e.target.result); if(!confirm("ATTENTION: Ça va écraser toutes les données actuelles. Continuer?")) return; stock = data.stock || []; ventes = data.ventes || []; infosEts = data.infosEts || infosEts; compteurRecu = data.compteur || 1; CODE_STOCK = data.code || "1234"; save(); afficher(); afficherHisto(); alert("Données restaurées avec succès!"); }catch{ alert("Fichier invalide!"); } }; reader.readAsText(file); }
-function saveInfosEts(){ infosEts.nom = nomEts.value; infosEts.tel = telEts.value; infosEts.adresse = adresseEts.value; save(); afficher(); alert("Infos ETS enregistrées!"); }
-function changerCode(){ let ancien = prompt("Tape l'ancien code:"); if(ancien!= CODE_STOCK) return alert("Ancien code incorrect!"); let nouveau = prompt("Tape le nouveau code:"); if(!nouveau) return alert("Code invalide"); let confirmNew = prompt("Retape le nouveau code pour confirmer:"); if(nouveau!= confirmNew) return alert("Les codes ne correspondent pas!"); CODE_STOCK = nouveau; save(); alert("CODE CHANGÉ AVEC SUCCÈS!"); }
-function verifierCodeStock(){ document.getElementById('modalCode').style.display = 'flex'; document.getElementById('inputCode').focus(); }
-function fermerModal(){ document.getElementById('modalCode').style.display = 'none'; }
-function ouvrirStock(){ if(document.getElementById('inputCode').value == CODE_STOCK){ openTab('Stock', document.querySelectorAll('.tablinks')[1]); fermerModal(); }else{ alert("CODE INCORRECT!"); } }
-function openTab(tabName, element) { document.querySelectorAll(".page").forEach(p=>p.classList.remove("active")); document.querySelectorAll(".tablinks").forEach(b=>b.classList.remove("active")); document.getElementById(tabName).classList.add("active"); element.classList.add("active"); if(tabName=='Parametres'){ nomEts.value = infosEts.nom; telEts.value = infosEts.tel; adresseEts.value = infosEts.adresse; } if(tabName=='Historique'){ afficherHisto(); } }
-function setFiltreVente(type, btn){ filtreVenteActif = type; document.querySelectorAll('.filtre-vente button').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); selectDateJour.style.display = (type=='jour')? 'block' : 'none'; afficher(); }
-function ajouterProduit(){ let nom = nomProduit.value.trim(); let qte = +stockAjout.value||0; if(!nom) return alert("Nom obligatoire"); let prod = stock.find(x=>x.nom.toLowerCase()==nom.toLowerCase()); if(prod){ prod.initial += qte; alert(nom + " rechargé de " + qte); }else{ stock.push({nom:nom,initial:qte,vendu:0}); alert(nom + " ajouté"); } save();afficher();nomProduit.value="";stockAjout.value=""; }
-function supprimerProduit(index){ let prod = stock[index]; if(prod.vendu > 0) return alert("IMPOSSIBLE! Ce produit a déjà des ventes: " + prod.vendu); if(!confirm("SUPPRIMER DEFINITIVEMENT " + prod.nom + "?")) return; stock.splice(index,1); save();afficher(); alert(prod.nom + " supprimé."); }
-function ajouterAuPanier(){ let q=+qteVente.value||0; let p=+prixVente.value||0; let b=+benefVente.value||0; let nom=produitVente.value.trim(); if(!nom) return alert("Choisis un produit"); let prod=stock.find(x=>x.nom.toLowerCase()==nom.toLowerCase()); if(!prod) return alert("Produit introuvable"); if(prod.initial - prod.vendu < q) return alert("Stock insuffisant! Reste: "+(prod.initial-prod.vendu)); panier.push({nom:nom, qte:q, prix:p, benef:b, ca:q*p, benefTotal:q*b}); afficherPanier(); produitVente.value="";qteVente.value="1";prixVente.value="";benefVente.value=""; }
-function afficherPanier(){ if(panier.length==0){zonePanier.style.display="none"; return;} zonePanier.style.display="block"; let html=""; let total=0; panier.forEach((item,i)=>{ total+=item.ca; html+=`<div class="panier-item"><span>${item.qte}x ${item.nom}</span><span>${item.ca} F <button onclick="panier.splice(${i},1);afficherPanier()" style="background:red;color:white;border:none;border-radius:3px">X</button></span></div>` }); listePanier.innerHTML=html; totalPanier.innerText=total+" F"; }
-function viderPanier(){ panier=[]; afficherPanier(); }
-function validerVentePanier(){ if(panier.length==0) return alert("Panier vide"); if(!dateVente.value) return alert("Choisis une date"); for(let item of panier){ let prod=stock.find(x=>x.nom==item.nom); if(prod.initial - prod.vendu < item.qte) return alert("Stock insuffisant pour: "+item.nom); } panier.forEach(item=>{ let prod=stock.find(x=>x.nom==item.nom); prod.vendu+=item.qte; }); let now = new Date(); ventes.push({ id:compteurRecu, date:dateVente.value, heure:now.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'}), articles:JSON.parse(JSON.stringify(panier)), ca:panier.reduce((a,b)=>a+b.ca,0), benef:panier.reduce((a,b)=>a+b.benefTotal,0) }); compteurRecu++; save();afficher();viderPanier(); alert("Vente N°" + String(compteurRecu-1).padStart(12,'0') + " enregistrée!"); }
-function annulerVente(id){ if(!confirm("ANNULER cette vente? Le stock sera remis.")) return; let vente = ventes.find(x=>x.id==id); vente.articles.forEach(item=>{ let prod = stock.find(x=>x.nom==item.nom); if(prod) prod.vendu -= item.qte; }); ventes = ventes.filter(x=>x.id!=id); save();afficher();afficherHisto(); alert("Vente annulée"); }
-function afficherHisto(){ infosEtsAffichage.innerHTML=`<h3>${infosEts.nom}</h3><div>TEL: ${infosEts.tel}</div><div>ADRESSE: ${infosEts.adresse}</div>`; let search = searchHisto.value.toLowerCase(); let d1 = dateDebut.value; let d2 = dateFin.value; let vt="<tr><th>N°</th><th>Date Heure</th><th>Articles</th><th>CA</th><th>Action</th></tr>"; let ventesFiltre = ventes.filter(x=>{ let matchSearch = x.articles.some(a=>a.nom.toLowerCase().includes(search)); let matchDate = (!d1 || x.date >= d1) && (!d2 || x.date <= d2); return matchSearch && matchDate; }); ventesFiltre.forEach(x=>{ let resume = x.articles.map(a=>a.qte+"x "+a.nom).join(', '); vt+=`<tr><td>${String(x.id).padStart(12,'0')}</td><td>${formatDateJJMMAAAA(x.date)} ${x.heure}</td><td>${resume}</td><td>${x.ca} F</td><td><button class="recu" onclick="genererRecu(${x.id})">VOIR REÇU</button><button class="annuler" onclick="annulerVente(${x.id})">ANNULER</button></td></tr>` }); tableVentesTout.innerHTML=vt; }
-function genererRecu(id){ venteEnCoursRecu = ventes.find(x=>x.id==id); if(!venteEnCoursRecu) return; let numRecu = String(venteEnCoursRecu.id).padStart(12,'0'); let lignesArticles = ""; venteEnCoursRecu.articles.forEach(item=>{ lignesArticles += `<div style="display:flex; justify-content:space-between; margin:2px 0"><span>${item.qte}x ${item.nom}</span><span>${item.ca} F</span></div>`; }); contenuRecu.innerHTML = `<div style="text-align:center"><div style="font-weight:bold; font-size:14px">${infosEts.nom}</div><div style="font-size:10px">${infosEts.tel}</div><div style="font-size:10px">${infosEts.adresse}</div></div><div style="border-bottom:1px dashed #000; margin:3px 0"></div><div style="font-size:10px">N°: ${numRecu}</div><div style="font-size:10px">Date: ${formatDateJJMMAAAA(venteEnCoursRecu.date)} ${venteEnCoursRecu.heure}</div><div style="border-bottom:1px dashed #000; margin:3px 0"></div>${lignesArticles}<div style="border-bottom:1px dashed #000; margin:3px 0"></div><div style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px"><span>TOTAL:</span><span>${venteEnCoursRecu.ca} F</span></div><div style="text-align:center; border-top:1px dashed #000; padding-top:3px; font-size:10px">Merci pour votre confiance!</div>`; document.getElementById('popupRecu').style.display = 'block'; }
-function fermerPopupRecu(){ document.getElementById('popupRecu').style.display = 'none'; }
-function imprimerRecu(){ let numRecu = String(venteEnCoursRecu.id).padStart(12,'0'); let texte = `${infosEts.nom}\n${infosEts.tel}\n${infosEts.adresse}\n\nN°: ${numRecu}\nDate: ${formatDateJJMMAAAA(venteEnCoursRecu.date)} ${venteEnCoursRecu.heure}\n--------------------------------\n`; venteEnCoursRecu.articles.forEach(item=>{ texte += `${item.qte}x ${item.nom}..... ${item.ca} F\n`; }); texte += `--------------------------------\nTOTAL: ${venteEnCoursRecu.ca} F\nMerci pour votre confiance!\n\n`; let url = `intent://#Intent;action=android.intent.action.SEND;type=text/plain;S.android.intent.extra.TEXT=${encodeURIComponent(texte)};package=ru.a402d.rawbtprinter;end`; window.location.href = url; fermerPopupRecu(); }
-function partagerWhatsApp(){ let numRecu = String(venteEnCoursRecu.id).padStart(12,'0'); let texte = `*${infosEts.nom}*\n${infosEts.tel}\n${infosEts.adresse}\n\nN°: ${numRecu}\nDate: ${formatDateJJMMAAAA(venteEnCoursRecu.date)} ${venteEnCoursRecu.heure}\n--------------------------------\n`; venteEnCoursRecu.articles.forEach(item=>{ texte += `${item.qte}x ${item.nom}...... ${item.ca} F\n`; }); texte += `--------------------------------\n*TOTAL: ${venteEnCoursRecu.ca} F*\n\nMerci pour votre confiance!`; window.open(`https://wa.me/?text=${encodeURIComponent(texte)}`, '_blank'); }
-function afficher(){ let s="<tr><th>N°</th><th>Produit</th><th>Stock Départ</th><th>Vendu</th><th>En Stock</th><th>Action</th></tr>"; let stockTrie = [...stock].sort((a,b)=>a.nom.localeCompare(b.nom)); totalProduits.innerText = stockTrie.length; stockTrie.forEach((x,i)=>{ let vraiIndex = stock.findIndex(p => p.nom === x.nom); let restant = x.initial - x.vendu; s+=`<tr><td>${i+1}</td><td>${x.nom}</td><td>${x.initial}</td><td>${x.vendu}</td><td ${restant<3?'class="alerte"':''}>${restant}</td><td><button class="recharge" onclick="let q=prompt('Combien ajouter?');if(q){stock[${vraiIndex}].initial+=+q;save();afficher()}">+Recharger</button> <button class="supprimer" onclick="supprimerProduit(${vraiIndex})">Supprimer</button></td></tr>` }); tableStock.innerHTML=s; let p=""; stockTrie.forEach(x=>p+=`<option value="${x.nom}">`); listeProduits.innerHTML=p; let auj = new Date().toISOString().split('T')[0]; let dateFiltre = selectDateJour.value || auj; let d = new Date(); let debutSem = new Date(d.setDate(d.getDate()-d.getDay())).toISOString().split('T')[0]; let debutMois = auj.substring(0,8)+"01"; let debutAn = auj.substring(0,4)+"-01-01"; let ventesFiltrees = []; let titre = "JOUR"; if(filtreVenteActif=='jour'){ ventesFiltrees = ventes.filter(x=>x.date==dateFiltre); titre="JOUR " + formatDateJJMMAAAA(dateFiltre); } if(filtreVenteActif=='semaine'){ ventesFiltrees = ventes.filter(x=>x.date>=debutSem); titre="SEMAINE"; } if(filtreVenteActif=='mois'){ ventesFiltrees = ventes.filter(x=>x.date>=debutMois); titre="MOIS"; } if(filtreVenteActif=='annee'){ ventesFiltrees = ventes.filter(x=>x.date>=debutAn); titre="ANNÉE"; } let totalCA = ventesFiltrees.reduce((a,b)=>a+b.ca,0); let totalBenef = ventesFiltrees.reduce((a,b)=>a+b.benef,0); titreResume.innerText = "Chiffre d'Affaires " + titre; titreBenef.innerText = "BÉNÉFICE " + titre; titreNb.innerText = "Nombre de Ventes"; caResume.innerText = totalCA + " F"; benefResume.innerText = totalBenef + " F"; nbResume.innerText = ventesFiltrees.length; titreTableau.innerText = "VENTES DU " + titre; let vf="<tr><th>Date Heure</th><th>Articles</th><th>CA</th><th>Benef</th><th>Action</th></tr>"; ventesFiltrees.forEach(x=>{ let resume = x.articles.map(a=>a.qte+"x "+a.nom).join(', '); vf+=`<tr><td>${formatDateJJMMAAAA(x.date)} ${x.heure}</td><td>${resume}</td><td>${x.ca} F</td><td>${x.benef} F</td><td><button class="recu" onclick="genererRecu(${x.id})">REÇU</button><button class="annuler" onclick="annulerVente(${x.id})">ANNULER</button></td></tr>` }); tableVentesFiltre.innerHTML=vf; }
+
+
+window.onload = function(){ 
+  if(checkLicence()){ 
+    initApp(); 
+  } 
+}
+
+
+function initApp(){ 
+  dateVente.value = new Date().toISOString().split('T')[0]; 
+  selectDateJour.value = new Date().toISOString().split('T')[0]; 
+  dateDebut.value = new Date().toISOString().split('T')[0].substring(0,8) + "01"; 
+  dateFin.value = new Date().toISOString().split('T')[0]; 
+  selectDateJour.onchange = afficher; 
+  afficher(); 
+}
+
+
+function formatDateJJMMAAAA(dateISO){ 
+  if(!dateISO) return ""; 
+  let [y,m,d] = dateISO.split('-'); 
+  return `${d}/${m}/${y}`; 
+}
+
+
+function save(){ 
+  localStorage.setItem('stock_V58GF', JSON.stringify(stock)); 
+  localStorage.setItem('ventes_V58GF', JSON.stringify(ventes)); 
+  localStorage.setItem('code_stock_V58GF', CODE_STOCK); 
+  localStorage.setItem('infos_ets_V58GF', JSON.stringify(infosEts)); 
+  localStorage.setItem('compteur_recu_V58GF', compteurRecu); 
+}
+
+
+function exporterDonnees(){ 
+  let data = {stock:stock, ventes:ventes, infosEts:infosEts, compteur:compteurRecu, code:CODE_STOCK}; 
+  let blob = new Blob([JSON.stringify(data)], {type: "application/json"}); 
+  let url = URL.createObjectURL(blob); 
+  let a = document.createElement("a"); 
+  a.href = url; 
+  a.download = "SAUVEGARDE_KSCOR_" + new Date().toISOString().split('T')[0] + ".json"; 
+  document.body.appendChild(a); 
+  a.click(); 
+  document.body.removeChild(a); 
+  alert("Sauvegarde téléchargée !"); 
+}
+
+
+function importerDonnees(event){ 
+  let file = event.target.files[0]; 
+  if(!file) return; 
+  let reader = new FileReader(); 
+  reader.onload = function(e){ 
+    try{ 
+      let data = JSON.parse(e.target.result); 
+      if(!confirm("ATTENTION: Ça va écraser toutes les données actuelles. Continuer?")) return; 
+      stock = data.stock || []; 
+      ventes = data.ventes || []; 
+      infosEts = data.infosEts || infosEts; 
+      compteurRecu = data.compteur || 1; 
+      CODE_STOCK = data.code || "1234"; 
+      save(); 
+      afficher(); 
+      afficherHisto(); 
+      alert("Données restaurées avec succès !"); 
+    }catch(err){ 
+      alert("Fichier invalide !"); 
+    } 
+  }; 
+  reader.readAsText(file); 
+}
+
+
+function saveInfosEts(){ 
+  infosEts.nom = nomEts.value; 
+  infosEts.tel = telEts.value; 
+  infosEts.adresse = adresseEts.value; 
+  save(); 
+  afficher(); 
+  alert("Infos ETS enregistrées !"); 
+}
+
+
+function changerCode(){ 
+  let ancien = prompt("Tape l'ancien code:"); 
+  if(ancien !== CODE_STOCK) return alert("Ancien code incorrect !"); 
+  let nouveau = prompt("Tape le nouveau code:"); 
+  if(!nouveau) return alert("Code invalide"); 
+  let confirmNew = prompt("Retape le nouveau code pour confirmer:"); 
+  if(nouveau !== confirmNew) return alert("Les codes ne correspondent pas !"); 
+  CODE_STOCK = nouveau; 
+  save(); 
+  alert("CODE CHANGÉ AVEC SUCCÈS !"); 
+}
+
+
+function verifierCodeStock(){ 
+  document.getElementById('modalCode').style.display = 'flex'; 
+  document.getElementById('inputCode').focus(); 
+}
+
+
+function fermerModal(){ 
+  document.getElementById('modalCode').style.display = 'none'; 
+}
+
+
+function ouvrirStock(){ 
+  if(document.getElementById('inputCode').value === CODE_STOCK){ 
+    openTab('Stock', document.querySelectorAll('.tablinks')[1]); 
+    fermerModal(); 
+  } else { 
+    alert("CODE INCORRECT !"); 
+  } 
+}
+
+
+function openTab(tabName, element) { 
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active")); 
+  document.querySelectorAll(".tablinks").forEach(b => b.classList.remove("active")); 
+  document.getElementById(tabName).classList.add("active"); 
+  element.classList.add("active"); 
+  if(tabName === 'Parametres'){ 
+    nomEts.value = infosEts.nom; 
+    telEts.value = infosEts.tel; 
+    adresseEts.value = infosEts.adresse; 
+  } 
+  if(tabName === 'Historique'){ 
+    afficherHisto(); 
+  } 
+}
+
+
+function setFiltreVente(type, btn){ 
+  filtreVenteActif = type; 
+  document.querySelectorAll('.filtre-vente button').forEach(b => b.classList.remove('active')); 
+  btn.classList.add('active'); 
+  selectDateJour.style.display = (type === 'jour') ? 'block' : 'none'; 
+  afficher(); 
+}
+
+
+function ajouterProduit(){ 
+  let nom = nomProduit.value.trim(); 
+  let qte = +stockAjout.value || 0; 
+  if(!nom) return alert("Nom obligatoire"); 
+  let prod = stock.find(x => x.nom.toLowerCase() === nom.toLowerCase()); 
+  if(prod){ 
+    prod.initial += qte; 
+    alert(nom + " rechargé de " + qte); 
+  } else { 
+    stock.push({nom:nom, initial:qte, vendu:0}); 
+    alert(nom + " ajouté"); 
+  } 
+  save(); 
+  afficher(); 
+  nomProduit.value = ""; 
+  stockAjout.value = ""; 
+}
+
+
+function supprimerProduit(index){ 
+  let prod = stock[index]; 
+  if(prod.vendu > 0) return alert("IMPOSSIBLE ! Ce produit a déjà des ventes: " + prod.vendu); 
+  if(!confirm("SUPPRIMER DÉFINITIVEMENT " + prod.nom + " ?")) return; 
+  stock.splice(index, 1); 
+  save(); 
+  afficher(); 
+  alert(prod.nom + " supprimé."); 
+}
+
+
+function ajouterAuPanier(){ 
+  let q = +qteVente.value || 0; 
+  let p = +prixVente.value || 0; 
+  let b = +benefVente.value || 0; 
+  let nom = produitVente.value.trim(); 
+  if(!nom) return alert("Choisis un produit"); 
+  let prod = stock.find(x => x.nom.toLowerCase() === nom.toLowerCase()); 
+  if(!prod) return alert("Produit introuvable"); 
+  if(prod.initial - prod.vendu < q) return alert("Stock insuffisant ! Reste: " + (prod.initial - prod.vendu)); 
+  panier.push({nom:nom, qte:q, prix:p, benef:b, ca:q*p, benefTotal:q*b}); 
+  afficherPanier(); 
+  produitVente.value = ""; 
+  qteVente.value = "1"; 
+  prixVente.value = ""; 
+  benefVente.value = ""; 
+}
+
+
+function afficherPanier(){ 
+  if(panier.length === 0){ 
+    zonePanier.style.display = "none"; 
+    return; 
+  } 
+  zonePanier.style.display = "block"; 
+  let html = ""; 
+  let total = 0; 
+  panier.forEach((item, i) => { 
+    total += item.ca; 
+    html += `<div class="panier-item"><span>${item.qte}x ${item.nom}</span><span>${item.ca} F <button onclick="panier.splice(${i},1);afficherPanier()" style="background:red;color:white;border:none;border-radius:3px">X</button></span></div>`; 
+  }); 
+  listePanier.innerHTML = html; 
+  totalPanier.innerText = total + " F"; 
+}
+
+
+function viderPanier(){ 
+  panier = []; 
+  afficherPanier(); 
+}
+
+
+function validerVentePanier(){ 
+  if(panier.length === 0) return alert("Panier vide"); 
+  if(!dateVente.value) return alert("Choisis une date"); 
+  for(let item of panier){ 
+    let prod = stock.find(x => x.nom === item.nom); 
+    if(prod.initial - prod.vendu < item.qte) return alert("Stock insuffisant pour: " + item.nom); 
+  } 
+  panier.forEach(item => { 
+    let prod = stock.find(x => x.nom === item.nom); 
+    prod.vendu += item.qte; 
+  }); 
+  let now = new Date(); 
+  ventes.push({ 
+    id: compteurRecu, 
+    date: dateVente.value, 
+    heure: now.toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'}), 
+    articles: JSON.parse(JSON.stringify(panier)), 
+    ca: panier.reduce((a,b) => a + b.ca, 0), 
+    benef: panier.reduce((a,b) => a + b.benefTotal, 0) 
+  }); 
+  compteurRecu++; 
+  save(); 
+  afficher(); 
+  viderPanier(); 
+  alert("Vente N°" + String(compteurRecu - 1).padStart(12, '0') + " enregistrée !"); 
+}
+
+
+function annulerVente(id){ 
+  if(!confirm("ANNULER cette vente ? Le stock sera remis.")) return; 
+  let vente = ventes.find(x => x.id == id); 
+  vente.articles.forEach(item => { 
+    let prod = stock.find(x => x.nom === item.nom); 
+    if(prod) prod.vendu -= item.qte; 
+  }); 
+  ventes = ventes.filter(x => x.id != id); 
+  save(); 
+  afficher(); 
+  afficherHisto(); 
+  alert("Vente annulée"); 
+}
+
+
+function afficherHisto(){ 
+  infosEtsAffichage.innerHTML = `<h3>${infosEts.nom}</h3><div>TEL: ${infosEts.tel}</div><div>ADRESSE: ${infosEts.adresse}</div>`; 
+  let search = searchHisto.value.toLowerCase(); 
+  let d1 = dateDebut.value; 
+  let d2 = dateFin.value; 
+  let vt = "<tr><th>N°</th><th>Date Heure</th><th>Articles</th><th>CA</th><th>Action</th></tr>"; 
+  let ventesFiltre = ventes.filter(x => { 
+    let matchSearch = x.articles.some(a => a.nom.toLowerCase().includes(search)); 
+    let matchDate = (!d1 || x.date >= d1) && (!d2 || x.date <= d2); 
+    return matchSearch && matchDate; 
+  }); 
+  ventesFiltre.forEach(x => { 
+    let resume = x.articles.map(a => a.qte + "x " + a.nom).join(', '); 
+    vt += `<tr><td>${String(x.id).padStart(12, '0')}</td><td>${formatDateJJMMAAAA(x.date)} ${x.heure}</td><td>${resume}</td><td>${x.ca} F</td><td><button class="recu" onclick="genererRecu(${x.id})">VOIR REÇU</button><button class="annuler" onclick="annulerVente(${x.id})">ANNULER</button></td></tr>`; 
+  }); 
+  tableVentesTout.innerHTML = vt; 
+}
+
+
+function genererRecu(id){ 
+  venteEnCoursRecu = ventes.find(x => x.id == id); 
+  if(!venteEnCoursRecu) return; 
+  let numRecu = String(venteEnCoursRecu.id).padStart(12, '0'); 
+  let lignesArticles = ""; 
+  venteEnCoursRecu.articles.forEach(item => { 
+    lignesArticles += `<div style="display:flex; justify-content:space-between; margin:2px 0"><span>${item.qte}x ${item.nom}</span><span>${item.ca} F</span></div>`; 
+  }); 
+  contenuRecu.innerHTML = `<div style="text-align:center"><div style="font-weight:bold; font-size:14px">${infosEts.nom}</div><div style="font-size:10px">${infosEts.tel}</div><div style="font-size:10px">${infosEts.adresse}</div></div><div style="border-bottom:1px dashed #000; margin:3px 0"></div><div style="font-size:10px">N°: ${numRecu}</div><div style="font-size:10px">Date: ${formatDateJJMMAAAA(venteEnCoursRecu.date)} ${venteEnCoursRecu.heure}</div><div style="border-bottom:1px dashed #000; margin:3px 0"></div>${lignesArticles}<div style="border-bottom:1px dashed #000; margin:3px 0"></div><div style="display:flex; justify-content:space-between; font-weight:bold; font-size:14px"><span>TOTAL:</span><span>${venteEnCoursRecu.ca} F</span></div><div style="text-align:center; border-top:1px dashed #000; padding-top:3px; font-size:10px">Merci pour votre confiance !</div>`; 
+  document.getElementById('popupRecu').style.display = 'block'; 
+}
+
+
+function fermerPopupRecu(){ 
+  document.getElementById('popupRecu').style.display = 'none'; 
+}
+
+
+function imprimerRecu(){ 
+  let numRecu = String(venteEnCoursRecu.id).padStart(12, '0'); 
+  let texte = `${infosEts.nom}\n${infosEts.tel}\n${infosEts.adresse}\n\nN°: ${numRecu}\nDate: ${formatDateJJMMAAAA(venteEnCoursRecu.date)} ${venteEnCoursRecu.heure}\n--------------------------------\n`; 
+  venteEnCoursRecu.articles.forEach(item => { 
+    texte += `${item.qte}x ${item.nom}..... ${item.ca} F\n`; 
+  }); 
+  texte += `--------------------------------\nTOTAL: ${venteEnCoursRecu.ca} F\nMerci pour votre confiance !\n\n`; 
+  let url = `intent://#Intent;action=android.intent.action.SEND;type=text/plain;S.android.intent.extra.TEXT=${encodeURIComponent(texte)};package=ru.a402d.rawbtprinter;end`; 
+  window.location.href = url; 
+  fermerPopupRecu(); 
+}
+
+
+function partagerWhatsApp(){ 
+  let numRecu = String(venteEnCoursRecu.id).padStart(12, '0'); 
+  let texte = `*${infosEts.nom}*\n${infosEts.tel}\n${infosEts.adresse}\n\nN°: ${numRecu}\nDate: ${formatDateJJMMAAAA(venteEnCoursRecu.date)} ${venteEnCoursRecu.heure}\n--------------------------------\n`; 
+  venteEnCoursRecu.articles.forEach(item => { 
+    texte += `${item.qte}x ${item.nom}...... ${item.ca} F\n`; 
+  }); 
+  texte += `--------------------------------\n*TOTAL: ${venteEnCoursRecu.ca} F*\n\nMerci pour votre confiance !`; 
+  window.open(`https://wa.me/?text=${encodeURIComponent(texte)}`, '_blank'); 
+}
+
+
+function afficher(){ 
+  let s = "<tr><th>N°</th><th>Produit</th><th>Stock Départ</th><th>Vendu</th><th>En Stock</th><th>Action</th></tr>"; 
+  let stockTrie = [...stock].sort((a,b) => a.nom.localeCompare(b.nom)); 
+  totalProduits.innerText = stockTrie.length; 
+  stockTrie.forEach((x, i) => { 
+    let vraiIndex = stock.findIndex(p => p.nom === x.nom); 
+    let restant = x.initial - x.vendu; 
+    s += `<tr><td>${i+1}</td><td>${x.nom}</td><td>${x.initial}</td><td>${x.vendu}</td><td ${restant<3?'class="alerte"':''}>${restant}</td><td><button class="recharge" onclick="let q=prompt('Combien ajouter?');if(q){stock[${vraiIndex}].initial+=+q;save();afficher()}">+Recharger</button> <button class="supprimer" onclick="supprimerProduit(${vraiIndex})">Supprimer</button></td></tr>`; 
+  }); 
+  tableStock.innerHTML = s; 
+  let p = ""; 
+  stockTrie.forEach(x => p += `<option value="${x.nom}">`); 
+  listeProduits.innerHTML = p; 
+  let auj = new Date().toISOString().split('T')[0]; 
+  let dateFiltre = selectDateJour.value || auj; 
+  let d = new Date(); 
+  let debutSem = new Date(d.setDate(d.getDate() - d.getDay())).toISOString().split('T')[0]; 
+  let debutMois = auj.substring(0, 8) + "01"; 
+  let debutAn = auj.substring(0, 4) + "-01-01"; 
+  let ventesFiltrees = []; 
+  let titre = "JOUR"; 
+  if(filtreVenteActif === 'jour'){ 
+    ventesFiltrees = ventes.filter(x => x.date === dateFiltre); 
+    titre = "JOUR " + formatDateJJMMAAAA(dateFiltre); 
+  } 
+  if(filtreVenteActif === 'semaine'){ 
+    ventesFiltrees = ventes.filter(x => x.date >= debutSem); 
+    titre = "SEMAINE"; 
+  } 
+  if(filtreVenteActif === 'mois'){ 
+    ventesFiltrees = ventes.filter(x => x.date >= debutMois); 
+    titre = "MOIS"; 
+  } 
+  if(filtreVenteActif === 'annee'){ 
+    ventesFiltrees = ventes.filter(x => x.date >= debutAn); 
+    titre = "ANNÉE"; 
+  } 
+  let totalCA = ventesFiltrees.reduce((a,b) => a + b.ca, 0); 
+  let totalBenef = ventesFiltrees.reduce((a,b) => a + b.benef, 0); 
+  titreResume.innerText = "Chiffre d'Affaires " + titre; 
+  titreBenef.innerText = "BÉNÉFICE " + titre; 
+  titreNb.innerText = "Nombre de Ventes"; 
+  caResume.innerText = totalCA + " F"; 
+  benefResume.innerText = totalBenef + " F"; 
+  nbResume.innerText = ventesFiltrees.length; 
+  titreTableau.innerText = "VENTES DU " + titre; 
+  let vf = "<tr><th>Date Heure</th><th>Articles</th><th>CA</th><th>Benef</th><th>Action</th></tr>"; 
+  ventesFiltrees.forEach(x => { 
+    let resume = x.articles.map(a => a.qte + "x " + a.nom).join(', '); 
+    vf += `<tr><td>${formatDateJJMMAAAA(x.date)} ${x.heure}</td><td>${resume}</td><td>${x.ca} F</td><td>${x.benef} F</td><td><button class="recu" onclick="genererRecu(${x.id})">REÇU</button><button class="annuler" onclick="annulerVente(${x.id})">ANNULER</button></td></tr>`; 
+  }); 
+  tableVentesFiltre.innerHTML = vf; 
+}
 </script>
 </body>
 </html>
