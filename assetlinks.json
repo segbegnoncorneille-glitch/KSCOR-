@@ -1,8 +1,0 @@
-[{
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "com.kscor.gestionfacile",
-        "sha256_cert_fingerprints": ["DC:E3:59:F6:42:4C:7B:0C:A7:3D:E3:56:75:EE:9B:6A:D1:27:60:DB:DC:89:FC:3F:84:92:52:B2:14:91:80:FE"]
-      }
-    }]
